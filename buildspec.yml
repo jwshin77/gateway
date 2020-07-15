@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    _PROJECT_NAME: "bikeInventory"
+    _PROJECT_NAME: "gateway"
     _AWS_ACCOUNT: "admin10"
 
 phases:
@@ -53,6 +53,7 @@ phases:
               targetPort: 8080
           selector:
             app: $_PROJECT_NAME
+          type: LoadBalancer
         EOF
       - |
         cat  <<EOF | kubectl apply -f -
