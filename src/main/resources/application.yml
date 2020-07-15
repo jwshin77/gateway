@@ -1,0 +1,58 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: BikeRent
+          uri: http://localhost:8081
+          predicates:
+            - Path=/bikeRents/** 
+        - id: BikeInventory
+          uri: http://localhost:8082
+          predicates:
+            - Path=/bikeInventories/** 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: BikeRent
+          uri: http://BikeRent:8080
+          predicates:
+            - Path=/bikeRents/** 
+        - id: BikeInventory
+          uri: http://BikeInventory:8080
+          predicates:
+            - Path=/bikeInventories/** 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
